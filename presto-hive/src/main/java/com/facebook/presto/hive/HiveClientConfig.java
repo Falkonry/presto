@@ -139,6 +139,7 @@ public class HiveClientConfig
     private int partitionStatisticsSampleSize = 100;
     private boolean ignoreCorruptedStatistics;
     private boolean collectColumnStatisticsOnWrite;
+    private boolean falkonrySpecificEnabled;
 
     public int getMaxInitialSplits()
     {
@@ -1093,5 +1094,18 @@ public class HiveClientConfig
     {
         this.collectColumnStatisticsOnWrite = collectColumnStatisticsOnWrite;
         return this;
+    }
+
+    @Config("hive.falkonry-specific.enabled")
+    @ConfigDescription("Enable falkonry specific (external) table creates")
+    public HiveClientConfig setFalkonrySpecificEnabled(boolean falkonrySpecificEnabled)
+    {
+        this.falkonrySpecificEnabled = falkonrySpecificEnabled;
+        return this;
+    }
+
+    public boolean getFalkonrySpecificEnabled()
+    {
+        return falkonrySpecificEnabled;
     }
 }

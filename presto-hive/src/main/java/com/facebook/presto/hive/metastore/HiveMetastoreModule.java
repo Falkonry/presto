@@ -13,6 +13,7 @@
  */
 package com.facebook.presto.hive.metastore;
 
+import com.facebook.presto.hive.metastore.falkonry.FalkonryMetastoreModule;
 import com.facebook.presto.hive.metastore.file.FileMetastoreModule;
 import com.facebook.presto.hive.metastore.glue.GlueMetastoreModule;
 import com.facebook.presto.hive.metastore.thrift.ThriftMetastoreModule;
@@ -43,6 +44,7 @@ public class HiveMetastoreModule
             binder.bind(ExtendedHiveMetastore.class).toInstance(metastore.get());
         }
         else {
+            bindMetastoreModule("falkonry", new FalkonryMetastoreModule(connectorId));
             bindMetastoreModule("thrift", new ThriftMetastoreModule(connectorId));
             bindMetastoreModule("file", new FileMetastoreModule(connectorId));
             bindMetastoreModule("glue", new GlueMetastoreModule(connectorId));

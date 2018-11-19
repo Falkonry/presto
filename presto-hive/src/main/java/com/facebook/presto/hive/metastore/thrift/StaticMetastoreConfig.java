@@ -31,6 +31,7 @@ public class StaticMetastoreConfig
 
     private List<URI> metastoreUris;
     private String metastoreUsername;
+    private boolean falkonrySpecific;
 
     @NotNull
     public List<URI> getMetastoreUris()
@@ -61,6 +62,19 @@ public class StaticMetastoreConfig
     public StaticMetastoreConfig setMetastoreUsername(String metastoreUsername)
     {
         this.metastoreUsername = metastoreUsername;
+        return this;
+    }
+
+    public boolean isFalkonrySpecific()
+    {
+        return falkonrySpecific;
+    }
+
+    @Config("hive.falkonry-specific.enabled")
+    @ConfigDescription("Falkonry specific table handling")
+    public StaticMetastoreConfig setFalkonrySpecific(boolean falkonrySpecific)
+    {
+        this.falkonrySpecific = falkonrySpecific;
         return this;
     }
 }

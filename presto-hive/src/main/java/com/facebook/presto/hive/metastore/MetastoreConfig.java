@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 public class MetastoreConfig
 {
-    private String metastoreType = "thrift";
+    private String metastoreType = "falkonry";
 
     @NotNull
     public String getMetastoreType()
