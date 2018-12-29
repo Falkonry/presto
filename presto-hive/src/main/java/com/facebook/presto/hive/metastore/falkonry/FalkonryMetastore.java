@@ -96,6 +96,7 @@ public class FalkonryMetastore
     private static final String EXPLANATIONDATA = "EXPLANATIONDATA";
     private static final String CONFIDENCEDATA = "CONFIDENCEDATA";
     private static final String BATCHDATA = "BATCHDATA";
+    private static final String EPISODEDATA = "EPISODEDATA";
 
     @Inject
     public FalkonryMetastore(HdfsEnvironment hdfsEnvironment, FalkonryMetastoreConfig config)
@@ -159,6 +160,14 @@ public class FalkonryMetastore
         columns.add(new Column("score", HiveType.HIVE_FLOAT, Optional.empty()));
         columns.add(new Column("batch", HiveType.HIVE_STRING, Optional.empty()));
         columnsMap.put(EXPLANATIONDATA, columns);
+
+        columns = new ArrayList<>();
+        columns.add(new Column("end", HiveType.HIVE_LONG, Optional.empty()));
+        columns.add(new Column("time", HiveType.HIVE_LONG, Optional.empty()));
+        columns.add(new Column("thing", HiveType.HIVE_STRING, Optional.empty()));
+        columns.add(new Column("value", HiveType.HIVE_STRING, Optional.empty()));
+        columns.add(new Column("batch", HiveType.HIVE_STRING, Optional.empty()));
+        columnsMap.put(EPISODEDATA, columns);
     }
 
     @Override
@@ -233,6 +242,9 @@ public class FalkonryMetastore
         }
         else if (tableName.contains(EXPLANATIONDATA)) {
             columns = columnsMap.get(EXPLANATIONDATA);
+        }
+        else if (tableName.contains(EPISODEDATA)) {
+            columns = columnsMap.get(EPISODEDATA);
         }
         return Optional.of(new Table(
                 databaseName,
@@ -452,6 +464,9 @@ public class FalkonryMetastore
         }
         else if (tableName.contains(EXPLANATIONDATA)) {
             columns = columnsMap.get(EXPLANATIONDATA);
+        }
+        else if (tableName.contains(EPISODEDATA)) {
+            columns = columnsMap.get(EPISODEDATA);
         }
         return Optional.of(new Partition(
                 databaseName,
