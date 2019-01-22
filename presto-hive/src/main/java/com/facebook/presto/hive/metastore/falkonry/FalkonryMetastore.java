@@ -213,19 +213,21 @@ public class FalkonryMetastore
 
         Path location = getTableMetadataDirectory(tableName);
         List<Column> partitionColumns = new ArrayList<>();
-        try {
-            log.info("Checking for partitions in " + location.toString());
-            FileSystem fs = hdfsEnvironment.getFileSystem(hdfsContext, location);
-            FileStatus[] files = fs.listStatus(location);
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory() && files[i].getPath().getName().startsWith("signal=")) {
-                    partitionColumns.add(new Column("signal", HiveType.HIVE_STRING, Optional.empty()));
-                    break;
+        if(!tableName.contains(BATCHDATA)) {
+            try {
+                log.info("Checking for partitions in " + location.toString());
+                FileSystem fs = hdfsEnvironment.getFileSystem(hdfsContext, location);
+                FileStatus[] files = fs.listStatus(location);
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i].isDirectory() && files[i].getPath().getName().startsWith("signal=")) {
+                        partitionColumns.add(new Column("signal", HiveType.HIVE_STRING, Optional.empty()));
+                        break;
+                    }
                 }
             }
-        }
-        catch (IOException exc) {
-            log.warn("Failed while reading partitions in path=" + location);
+            catch (IOException exc) {
+                log.warn("Failed while reading partitions in path=" + location);
+            }
         }
         List<Column> columns = null;
         if (tableName.contains(RAWDATA)) {
