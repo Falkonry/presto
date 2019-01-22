@@ -213,7 +213,7 @@ public class FalkonryMetastore
 
         Path location = getTableMetadataDirectory(tableName);
         List<Column> partitionColumns = new ArrayList<>();
-        if(!tableName.contains(BATCHDATA)) {
+        if (!tableName.contains(BATCHDATA)) {
             try {
                 log.info("Checking for partitions in " + location.toString());
                 FileSystem fs = hdfsEnvironment.getFileSystem(hdfsContext, location);
